@@ -40,6 +40,13 @@ struct Euclid: Euclidean {
     }
 }
 
+extension Euclid: CustomStringConvertible {
+    public
+    var description: String {
+        return "Euclid: \(resolution) – \(density) – \(phase) ––> \(string)"
+    }
+}
+
 public
 extension Euclid {
     /// Create a Euclid with all values initialized to zero.
@@ -64,8 +71,10 @@ func densityWasSet(density: Int, resolution: Int) -> Int {
     switch density {
     case _ where density < 0:
         return 0
+        
     case _ where density > resolution:
         return resolution
+        
     default:
         return density
     }
@@ -88,6 +97,8 @@ func phaseWasSet(phase: Int, resolution: Int) -> Int {
     
     return newPhase
 }
+
+extension Euclid: NecklaceRepresentable {}
 
 extension Euclid: Equatable {}
 

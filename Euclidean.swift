@@ -3,7 +3,7 @@ import Foundation
 
 /// Protocol for representing euclidean strings, which are generated through Euclid's algorithm for computing the greatest common divisor.
 public
-protocol Euclidean {
+protocol Euclidean: NecklaceRepresentable {
     /// The number of slots present in space
     ///
     /// - Requires: density <= resolution <= Int.max
@@ -16,26 +16,26 @@ protocol Euclidean {
     /// - Requires: 0 <= density <= resolution
     ///
     /// - Important: All adopters are responsible for assuring that the above requirement is met
-    var density: Int { get }
+    var density: Int { get set }
     
     /// The offset of the particles in space
     ///
     /// - Requires: 0 <= phase < resolution
     ///
     /// - Important: All adopters are responsible for assuring that the above requirement is met
-    var phase: Int { get }
+    var phase: Int { get set }
 }
 
-public
 extension Euclidean {
     /// A euclidean string represented as a boolean array
+    public
     var necklace: [Bool] {
         return neckGen(lhs: density, rhs: resolution - density, phase: phase)
     }
     
-    /// A euclidean string represented as a binary string
-    var string: String {
-        return necklace.reduce("") { $0 + ($1 ? "1" : "0") }
+    public
+    var indices: [Int] {
+        return necklace.indicesOf(true)
     }
 }
 
